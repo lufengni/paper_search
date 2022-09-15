@@ -1,0 +1,86 @@
+.mobile_container {
+  width: 65rem;
+  margin: 0 auto;
+  // height: 100%;
+  // border: 1px solid black;
+  .content {
+    .title {
+      font-size: 1.5rem;
+      padding: 25px 0 15px 0;
+      // color: #333333;
+      color: #30b7d7;
+    }
+    .author {
+      font-size: 14px;
+      line-height: 27px;
+      text-align: center;
+      color: #666666;
+    }
+    .abstract {
+      padding: 6px 6px;
+      text-align: left;
+      font-size: 1rem;
+      display: flex;
+      color: #666666;
+      .text {
+        width: 2.5rem;
+        color: #000;
+      }
+    }
+    .text-title {
+      font-weight: bold;
+      padding-right: 5px;
+    }
+    .keyworld {
+      padding-top: 6px;
+      text-align: left;
+      display: flex;
+      color: #666666;
+      .text {
+        width: 3.4rem;
+        color: #000;
+      }
+    }
+  }
+  .operate {
+    margin: 30px 0;
+    text-align: left;
+    .btn {
+      width: 89px;
+      height: 32px;
+      color: #fff;
+      padding: 0 8px;
+      margin: 0 8px;
+      border: none;
+    }
+    .read-online {
+      background: #30b7d7;
+    }
+    .Download {
+      background: #3594ff;
+    }
+  }
+  .related-data {
+    // margin: auto;
+    .hr-solid-content {
+      color: #a2a9b6;
+      border: 0;
+      font-size: 16px;
+      padding: 1em 0;
+      position: relative;
+    }
+    .hr-solid-content::before {
+      content: attr(data-content);
+      position: absolute;
+      padding: 0 1ch;
+      line-height: 1px;
+      border: solid #d0d0d5;
+      border-width: 0 99vw;
+      width: fit-content;
+      /* for 不支持fit-content浏览器 */
+      white-space: nowrap;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
