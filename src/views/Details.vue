@@ -150,6 +150,12 @@ export default {
           type: "resolved",
           rela: "主营产品",
         },
+        {
+          source: "随便",
+          target: "互联网金融",
+          type: "resolved",
+          rela: "主营产品",
+        },
       ],
       nodes: [
         { id: "同花顺", type: "resolved" },
@@ -159,6 +165,7 @@ export default {
         { id: "金融资讯及数据服务", type: "resolved" },
         { id: "互联网金融", type: "resolved" },
         { id: "网上行情交易系统", type: "resolved" },
+        { id: "随便", type: "resolved" },
       ]
 
     };
