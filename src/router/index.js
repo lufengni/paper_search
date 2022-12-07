@@ -34,6 +34,18 @@ const routes = [
     component: () => import('../views/Details.vue')
     // component: Details
   },
+  {
+    path: '/Select',
+    name: 'Select',
+    component: () => import('../views/Select.vue')
+    // component: Details
+  },
+  {
+    path: '/Input',
+    name: 'Input',
+    component: () => import('../views/Input.vue')
+    // component: Details
+  }
 ]
 
 const router = new VueRouter({

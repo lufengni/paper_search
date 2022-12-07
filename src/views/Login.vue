@@ -42,7 +42,7 @@ export default {
       // console.log(this.username, this.password)
       if (this.username === 'fenny' && this.password === '123') {
         this.$router.push({
-          path: "/Home",
+          path: "/Select",
         });
       } else {
         alert('用户名或者密码错误')
