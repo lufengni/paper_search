@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <button @click="inputMessage()">论文信息录入</button>
-        <button>论文信息搜索</button>
+        <button @click="search()">论文信息搜索</button>
 
     </div>
 </template>
@@ -16,6 +16,11 @@ export default {
         inputMessage() {
             this.$router.push({
                 path: "/Input",
+            });
+        },
+        search() {
+            this.$router.push({
+                path: "/Home",
             });
         }
 

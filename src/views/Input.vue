@@ -1,104 +1,73 @@
-<!-- <template>
+<template>
+    <div class="root">
+        <div class="selectFile">
+            <div class="title">文件上传</div>
+            <div class="content">
+                <input type="file" ref="clearFile" @change="getFile($event)" class="input">
+                <!-- <button v-if="flage" class="btn" @click="cancle()">取消选择</button> -->
+                <button @click="submitAddFile" class="btn">开始上传</button>
+            </div>
 
-    <form action="" method="post" class="basic-grey">
+        </div>
+    </div>
 
-        <h1>Contact Form
-
-            <span>Please fill all the texts in the fields.</span>
-
-        </h1>
-
-        <label>
-
-            <span>Themplate :</span>
-
-            <select id="template" name="themplate" onchange="changeStyle();">
-
-                <option value="basic-grey">basic-grey</option>
-
-                <option value="elegant-aero">elegant-aero</option>
-
-                <option value="smart-green">smart-green</option>
-
-                <option value="white-pink">white-pink</option>
-
-                <option value="bootstrap-frm">bootstrap-frm</option>
-
-                <option value="dark-matter">dark-matter</option>
-
-            </select>
-
-        </label>
-
-        <label>
-
-            <span>Your Name :</span>
-
-            <input id="name" type="text" name="name" placeholder="Your Full Name" />
-
-        </label>
-
-        <label>
-
-            <span>Your Email :</span>
-
-            <input id="email" type="email" name="email" placeholder="Valid Email Address" />
-
-        </label>
-
-
-
-        <label>
-
-            <span>Message :</span>
-
-            <textarea id="message" name="message" placeholder="Your Message to Us"></textarea>
-
-        </label>
-
-        <label>
-
-            <span>Subject :</span><select name="selection">
-
-                <option value="Job Inquiry">Job Inquiry</option>
-
-                <option value="General Question">General Question</option>
-
-            </select>
-
-        </label>
-
-        <label>
-
-            <span>&nbsp;</span>
-
-            <input type="button" class="button" value="Send" />
-
-        </label>
-
-    </form>
 </template>
  
 <script>
 export default {
     data() {
         return {
+            file: '',
+            flage: false
         }
     },
     methods: {
-        changeStyle() {
+        getFile(event) {
+            this.file = event.target.files;
+            // for (var i = 0; i < file.length; i++) {
+            //     //    上传类型判断
+            //     var imgName = file[i].name;
+            //     var idx = imgName.lastIndexOf(".");
+            //     if (idx != -1) {
+            //         var ext = imgName.substr(idx + 1).toUpperCase();
+            //         ext = ext.toLowerCase();
+            //         if (ext != 'pdf' && ext != 'doc' && ext != 'docx') {
 
-            var template = document.getElementById("template");
+            //         } else {
+            //             this.addArr.push(file[i]);
+            //         }
+            //     } else {
 
-            var index = template.selectedIndex;
+            //     }
+            // }
+        },
+        submitAddFile() {
+            if (!this.file) alert("请选择要上传的文件")
 
-            var templatevalue = template.options[index].value;
-
-            var templatecss = document.getElementById("templatecss");
-
-            templatecss.setAttribute("href", "css/" + templatevalue + ".css");
-
-            document.getElementsByTagName("form")[0].setAttribute("class", templatevalue);
+            var formData = new FormData();
+            formData.append('num', this.addType);
+            formData.append('linkId', this.addId);
+            formData.append('rfilename', this.addFileName);
+            for (var i = 0; i < this.addArr.length; i++) {
+                formData.append('fileUpload', this.addArr[i]);
+            }
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': this.token
+                }
+            };
+            this.axios.post(apidate.uploadEnclosure, formData, config)
+                .then((response) => {
+                    if (response.data.info == "success") {
+                        this.$message({
+                            type: 'success',
+                            message: '附件上传成功!'
+                        });
+                    }
+                })
+        },
+        cancle() {
 
         }
 
@@ -106,175 +75,42 @@ export default {
 }
 </script>
 
-<style>
-/* Basic Grey */
-
-.basic-grey {
-
-    margin-left: auto;
-
-    margin-right: auto;
-
-    max-width: 500px;
-
-    background: #F7F7F7;
-
-    padding: 25px 15px 25px 10px;
-
-    font: 12px Georgia, "Times New Roman", Times, serif;
-
-    color: #888;
-
-    text-shadow: 1px 1px 1px #FFF;
-
-    border: 1px solid #E4E4E4;
-
+<style scoped>
+.root {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f4f3ef;
 }
-
-.basic-grey h1 {
-
-    font-size: 25px;
-
-    padding: 0px 0px 10px 40px;
-
-    display: block;
-
-    border-bottom: 1px solid #E4E4E4;
-
-    margin: -10px -15px 30px -10px;
-    ;
-
-    color: #888;
-
+.selectFile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 500px;
+    width: 500px;
+    background-color: #fff;
 }
-
-.basic-grey h1>span {
-
-    display: block;
-
-    font-size: 11px;
-
+.title {
+    text-align: left;
+    margin-left: 30px;
+    margin-top: 30px;
+    border-bottom: 1px solid gray;
 }
-
-.basic-grey label {
-
-    display: block;
-
-    margin: 0px;
-
+.content {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    margin-top: 150px;
 }
-
-.basic-grey label>span {
-
-    float: left;
-
-    width: 20%;
-
-    text-align: right;
-
-    padding-right: 10px;
-
-    margin-top: 10px;
-
-    color: #888;
-
+.input {
+    margin-left: 180px;
 }
+.btn {
+    margin-left: 180px;
+    margin-top: 50px;
+    width: 150px;
 
-.basic-grey input[type="text"],
-.basic-grey input[type="email"],
-.basic-grey textarea,
-.basic-grey select {
-
-    border: 1px solid #DADADA;
-
-    color: #888;
-
-    height: 30px;
-
-    margin-bottom: 16px;
-
-    margin-right: 6px;
-
-    margin-top: 2px;
-
-    outline: 0 none;
-
-    padding: 3px 3px 3px 5px;
-
-    width: 70%;
-
-    font-size: 12px;
-
-    line-height: 15px;
-
-    box-shadow: inset 0px 1px 4px #ECECEC;
-
-    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
-
-    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
-
-}
-
-.basic-grey textarea {
-
-    padding: 5px 3px 3px 5px;
-
-}
-
-.basic-grey select {
-
-    background: #FFF url('down-arrow.png') no-repeat right;
-
-    background: #FFF url('down-arrow.png') no-repeat right;
-
-    appearance: none;
-
-    -webkit-appearance: none;
-
-    -moz-appearance: none;
-
-    text-indent: 0.01px;
-
-    text-overflow: '';
-
-    width: 70%;
-
-    height: 35px;
-
-    line-height: 25px;
-
-}
-
-.basic-grey textarea {
-
-    height: 100px;
-
-}
-
-.basic-grey .button {
-
-    background: #E27575;
-
-    border: none;
-
-    padding: 10px 25px 10px 25px;
-
-    color: #FFF;
-
-    box-shadow: 1px 1px 5px #B6B6B6;
-
-    border-radius: 3px;
-
-    text-shadow: 1px 1px 1px #9E3F3F;
-
-    cursor: pointer;
-
-}
-
-.basic-grey .button:hover {
-
-    background: #CF7A7A
 }
 </style>
  
-  -->
+ 

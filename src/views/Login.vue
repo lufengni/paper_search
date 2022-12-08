@@ -53,7 +53,7 @@ export default {
 };
 </script>
  
-<style>
+<style scoped>
 .box {
   position: absolute;
   top: 50%;

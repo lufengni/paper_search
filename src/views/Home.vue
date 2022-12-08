@@ -1,8 +1,10 @@
 <template>
+  <div class="root">
   <div class="home">
     <search-bar @search="toSearchPage"></search-bar>
 
   </div>
+</div>
 </template>
 
 <script>
@@ -100,6 +102,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.root {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f4f3ef;
+}
 .home {
   padding: 100px;
 }
