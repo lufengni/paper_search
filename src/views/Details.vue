@@ -47,8 +47,8 @@
             data-content="作者合作关系" />
         <!-- <button @click="showCpn">点击加载组件</button> -->
         <AuthorPartnership id="partnership"
-                           :links="links"
-                           :nodes="nodes"></AuthorPartnership>
+                           :links="links2"
+                           :nodes="nodes2"></AuthorPartnership>
       </div>
 
       <!-- <div class="related-data">
@@ -113,60 +113,136 @@ export default {
         { year: "1999", value: 13 }
       ],
       links: [
-        { source: "同花顺", target: "IFIND", type: "resolved", rela: "主营产品" },
+        { 
+          source: "大数据赋能高炉炼铁智能应用", 
+          target: "炼铁一体化智能管控平台在大冶特殊钢的应用", 
+          type: "resolved", 
+          rela: "主营产品" 
+        },
         {
-          source: "同花顺",
-          target: "手机金融信息服务",
+          source: "大数据赋能高炉炼铁智能应用",
+          target: "基于大数据分析技术的商业智能应用研究",
           type: "resolved",
           rela: "主营产品",
         },
         {
-          source: "同花顺",
-          target: "互联网金融信息服务",
+          source: "大数据赋能高炉炼铁智能应用",
+          target: "基于5G软件定义钢铁工业控制系统的设计与实现",
           type: "resolved",
           rela: "主营产品",
         },
         {
-          source: "同花顺",
-          target: "网上行情交易系统",
+          source: "大数据赋能高炉炼铁智能应用",
+          target: "基于MIV-GA-BP模型预测烧结矿FeO含量",
           type: "resolved",
           rela: "主营产品",
         },
         {
-          source: "网上行情交易系统",
-          target: "同花顺",
+          source: "基于MIV-GA-BP模型预测烧结矿FeO含量",
+          target: "大数据赋能高炉炼铁智能应用",
           type: "resolved",
           rela: "主营产品",
         },
         {
-          source: "同花顺",
-          target: "金融资讯及数据服务",
+          source: "大数据赋能高炉炼铁智能应用",
+          target: "基于大数据分析技术的商业智能应用研究",
           type: "resolved",
           rela: "主营产品",
         },
         {
-          source: "同花顺",
-          target: "互联网金融",
+          source: "大数据赋能高炉炼铁智能应用",
+          target: "大数据在航空情报中的应用分析",
           type: "resolved",
           rela: "主营产品",
         },
         {
-          source: "随便",
-          target: "互联网金融",
+          source: "大数据在企业中的应用",
+          target: "大数据在航空情报中的应用分析",
           type: "resolved",
           rela: "主营产品",
         },
+        {
+          source: "金融资讯及数据服务",
+          target: "基于大数据分析技术的商业智能应用研究",
+          type: "resolved",
+          rela: "主营产品",
+        },
+
       ],
       nodes: [
-        { id: "同花顺", type: "resolved" },
-        { id: "手机金融信息服务", type: "resolved" },
-        { id: "IFIND", type: "resolved" },
-        { id: "互联网金融信息服务", type: "resolved" },
+        { id: "大数据赋能高炉炼铁智能应用", type: "resolved" },
+        { id: "基于大数据分析技术的商业智能应用研究", type: "resolved" },
+        { id: "炼铁一体化智能管控平台在大冶特殊钢的应用", type: "resolved" },
+        { id: "基于5G软件定义钢铁工业控制系统的设计与实现", type: "resolved" },
         { id: "金融资讯及数据服务", type: "resolved" },
-        { id: "互联网金融", type: "resolved" },
-        { id: "网上行情交易系统", type: "resolved" },
-        { id: "随便", type: "resolved" },
-      ]
+        { id: "大数据在航空情报中的应用分析", type: "resolved" },
+        { id: "基于MIV-GA-BP模型预测烧结矿FeO含量", type: "resolved" },
+        { id: "大数据在企业中的应用", type: "resolved" },
+      ],
+      links2: [
+        { 
+          source: "唐文文", 
+          target: "李欣", 
+          type: "resolved", 
+          rela: "主营产品" 
+        },
+        {
+          source: "李欣",
+          target: "唐文文",
+          type: "resolved",
+          rela: "主营产品",
+        },
+        {
+          source: "唐文文",
+          target: "刘小杰",
+          type: "resolved",
+          rela: "主营产品",
+        },
+        {
+          source: "刘小杰",
+          target: "唐文文",
+          type: "resolved",
+          rela: "主营产品",
+        },
+        {
+          source: "李宏扬",
+          target: "李欣",
+          type: "resolved",
+          rela: "主营产品",
+        },
+        {
+          source: "李欣",
+          target: "李宏扬",
+          type: "resolved",
+          rela: "主营产品",
+        },
+        {
+          source: "李宏扬",
+          target: "张淑会",
+          type: "resolved",
+          rela: "主营产品",
+        },
+        {
+          source: "张淑会",
+          target: "李宏扬",
+          type: "resolved",
+          rela: "主营产品",
+        },
+        {
+          source: "张淑会",
+          target: "唐文文",
+          type: "resolved",
+          rela: "主营产品",
+        },
+
+      ],
+      nodes2: [
+        { id: "唐文文", type: "resolved" },
+        { id: "李欣", type: "resolved" },
+        { id: "刘小杰", type: "resolved" },
+        { id: "李宏扬", type: "resolved" },
+        { id: "张淑会", type: "resolved" },
+      ],
 
     };
   },
