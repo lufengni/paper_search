@@ -34,8 +34,7 @@
       <div class="related-data">
         <hr class="hr-solid-content"
             data-content="论文引用次数" />
-        <LineChart id="line"
-                   :dataset="data1"></LineChart>
+        <LineChart></LineChart>
 
         <hr class="hr-solid-content"
             data-content="论文引用关系" />

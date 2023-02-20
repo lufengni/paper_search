@@ -44,7 +44,7 @@ export default {
         if (this.username === 'fenny' && this.password === '123') {
 
           this.$router.push({
-            path: "/Select",
+            path: "/Home",
           });
         } else {
           alert('用户名或者密码错误')
