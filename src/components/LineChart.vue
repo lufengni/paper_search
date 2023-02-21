@@ -156,7 +156,7 @@ export default {
               }
             }
           }, {
-            name: '梁璐',
+            name: '大数据赋能高炉炼铁智能应用',
             itemStyle: {
               normal: {
                 color: 'red'
@@ -279,11 +279,11 @@ export default {
             name: "领导"
           }, {
             source: '祁同伟',
-            target: '梁璐',
+            target: '大数据赋能高炉炼铁智能应用',
             name: "夫妻"
           }, {
             source: '吴惠芬',
-            target: '梁璐',
+            target: '大数据赋能高炉炼铁智能应用',
             name: "朋友"
           }, {
             source: '李达康',
