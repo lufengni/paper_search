@@ -6,7 +6,8 @@
         <div class="title">
           <!-- v-html="$store.getters.getDetail.titleHeightLight" -->
           <!-- {{ content.title }} -->
-          {{ $store.getters.getDetail.title }}
+          <!-- {{ $store.getters.getDetail.titleHeightLight.replace(/<[^>]+>/g, "") }} -->
+          {{title}}
         </div>
         <div class="author">
           {{ $store.getters.getDetail.authors }}
@@ -15,8 +16,9 @@
           <div class="text-title">
             <div class="text">摘要:</div>
           </div>
-          <div class="abstract-content"
-               v-html="$store.getters.getDetail.summary">
+          <div class="abstract-content">
+            {{summary}}
+            <!-- v-html="$store.getters.getDetail.summary" -->
             <!-- {{ $store.getters.getDetail.summary }} -->
           </div>
         </div>
@@ -25,7 +27,7 @@
             <div class="text">关键词:</div>
           </div>
           <div class="keyworld-content">
-            {{$store.getters.getDetail.keywordList}}
+            {{$store.getters.getDetail.authors}}
           </div>
         </div>
       </div>
@@ -96,6 +98,8 @@ export default {
       linksCited: this.$store.getters.getLinksCited,
       dataAuthor: this.$store.getters.getDataAuthor,
       linksAuthor: this.$store.getters.getLinksAuthor,
+      title: this.$store.getters.getDetail.titleHeightLight.replace(/<[^>]+>/g, ""),
+      summary: this.$store.getters.getDetail.summary.replace(/<[^>]+>/g, "")
     };
   },
   computed: {

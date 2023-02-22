@@ -15,11 +15,12 @@
              v-html="item.titleHeightLight"
              @click="toDetais(item)">
         </div>
-        <div class="abstract">
-          {{ item.summary }}
+        <div class="abstract"
+             v-html="item.summary">
+          <!-- {{ item.summary }} -->
         </div>
         <div class="author">
-          {{ item.authors }}
+          {{item.author}}
         </div>
       </div>
     </div>
@@ -110,7 +111,7 @@ export default {
 
           this.$axios.get('http://localhost:8200/author/paper-author-cooperation', {
             params: {
-              pageTitle: title
+              paperTitle: title
             }
           }
 
@@ -118,25 +119,25 @@ export default {
             .then((data) => {
               let set = new Set()
               data.data.queryData.map(item => {
-                if (!set.has(item.startNode.title)) {
+                if (!set.has(item.startNode.name)) {
                   this.dataAuthor.push({
-                    name: item.startNode.title,
+                    name: item.startNode.name,
                     category: 1,
                     draggable: true,
                   })
-                  set.add(item.startNode.title)
+                  set.add(item.startNode.name)
                 }
-                if (!set.has(item.endNode.title)) {
+                if (!set.has(item.endNode.name)) {
                   this.dataAuthor.push({
-                    name: item.endNode.title,
+                    name: item.endNode.name,
                     category: 1,
                     draggable: true,
                   })
-                  set.add(item.endNode.title)
+                  set.add(item.endNode.name)
                 }
                 this.linksAuthor.push({
-                  source: item.startNode.title,
-                  target: item.endNode.title,
+                  source: item.startNode.name,
+                  target: item.endNode.name,
                   value: '合作'
                 })
               })
@@ -146,19 +147,10 @@ export default {
               this.$store.commit('setLinksAuthor', this.linksAuthor)
 
 
-              this.$router.push({
-                path: "Details",
-                // params: {
-                //   dataCited: this.dataCited,
-                //   linksCited: this.linksCited
-                // }
-              });
+              this.$router.push('/Details');
             })
 
-          this.$router.push({
-            path: "Details",
 
-          });
         })
 
     },
