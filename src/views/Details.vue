@@ -22,14 +22,14 @@
             <!-- {{ $store.getters.getDetail.summary }} -->
           </div>
         </div>
-        <div class="keyworld">
+        <!-- <div class="keyworld">
           <div class="text-title">
             <div class="text">关键词:</div>
           </div>
           <div class="keyworld-content">
             {{$store.getters.getDetail.authors}}
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="operate">
         <button class="btn read-online">在线阅读</button>

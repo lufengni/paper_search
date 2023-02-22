@@ -20,7 +20,7 @@
           <!-- {{ item.summary }} -->
         </div>
         <div class="author">
-          {{item.author}}
+          {{item.authors}}
         </div>
       </div>
     </div>
