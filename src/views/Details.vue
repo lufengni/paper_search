@@ -36,7 +36,8 @@
         <LineChart></LineChart> -->
 
         <hr class="hr-solid-content" data-content="论文引用关系" />
-        <CitedPapers :data="dataCited" :links="linksCited"></CitedPapers>
+        <!-- <CitedPapers :data="dataCited" :links="linksCited"></CitedPapers> -->
+        <CitedPapers></CitedPapers>
 
         <hr class="hr-solid-content" data-content="作者合作关系" />
         <AuthorPartnership></AuthorPartnership>
@@ -512,7 +513,7 @@ export default {
         target: item.endNode.title,
         name: '引用'
       })
-      
+
     })
 
     console.log(this.dataCited, this.linksCited)
