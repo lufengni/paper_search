@@ -8,15 +8,18 @@
       <div class="content"
            v-for="(item, index) in $store.getters.getSearchList"
            :key="index">
+        <!-- <div class="content"
+           v-for="(item, index) in dataList"
+           :key="index"> -->
         <div class="title"
-             v-html="item.title"
+             v-html="item.titleHeightLight"
              @click="toDetais(item)">
         </div>
         <div class="abstract">
           {{ item.summary }}
         </div>
         <div class="author">
-          {{ item.authorList }}
+          {{ item.authors }}
         </div>
       </div>
     </div>
@@ -33,10 +36,21 @@ export default {
     return {
       searchText: "",
       // list: JSON.parse(this.$route.query.queryData),
+      dataList: [],
+      dataCited: [],
+      linksCited: [],
+      dataAuthor: [],
+      linksAuthor: []
     };
   },
   mounted () {
+    console.log("search.vue")
+
     console.log(this.$store.getters.getSearchList);
+    console.log(this.$route.query.keyWorld);
+    this.searchText = this.$route.query.keyWorld
+
+
     // console.log(this.$route.query.queryData);
   },
   computed: {
@@ -50,24 +64,103 @@ export default {
     },
     toDetais (item) {
       //vuex方式，不传参
-
+      // console.log(item)
+      // item.title = item.titleHeightLight.replace(/<[^>]+>/g, "")
+      // console.log(item)
       this.$store.commit({
         type: 'renewDetail',
         detail: item
       })
-      this.$router.push({
-        path: "/Details",
-      });
-      // const parItem = JSON.stringify(item)
-      // this.$router.push({
-      //   path: "/Details",
-      //   query: {
-      //     detail: parItem,
-      //     // titel: item.titel,
-      //     // abstract: item.abstract,
-      //     // author: item.author,
-      //   },
-      // });
+      let title = item.titleHeightLight.replace(/<[^>]+>/g, "");
+
+      this.$axios.get('http://localhost:8200/paper/quote', {
+        params: {
+          pageTitle: title
+        }
+      })
+        .then((data) => {
+          console.log(data)
+          let set = new Set()
+          data.data.queryData.map(item => {
+            if (!set.has(item.startNode.title)) {
+              this.dataCited.push({
+                name: item.startNode.title,
+                des: item.startNode.title,
+              })
+              set.add(item.startNode.title)
+            }
+            if (!set.has(item.endNode.title)) {
+              this.dataCited.push({
+                name: item.endNode.title,
+                des: item.endNode.title,
+              })
+              set.add(item.endNode.title)
+            }
+            this.linksCited.push({
+              source: item.startNode.title,
+              target: item.endNode.title,
+              name: '引用'
+            })
+          })
+          console.log(this.dataCited, this.linksCited)
+
+          this.$store.commit('setDataCited', this.dataCited)
+          this.$store.commit('setLinksCited', this.linksCited)
+
+
+          this.$axios.get('http://localhost:8200/author/paper-author-cooperation', {
+            params: {
+              pageTitle: title
+            }
+          }
+
+          )
+            .then((data) => {
+              let set = new Set()
+              data.data.queryData.map(item => {
+                if (!set.has(item.startNode.title)) {
+                  this.dataAuthor.push({
+                    name: item.startNode.title,
+                    category: 1,
+                    draggable: true,
+                  })
+                  set.add(item.startNode.title)
+                }
+                if (!set.has(item.endNode.title)) {
+                  this.dataAuthor.push({
+                    name: item.endNode.title,
+                    category: 1,
+                    draggable: true,
+                  })
+                  set.add(item.endNode.title)
+                }
+                this.linksAuthor.push({
+                  source: item.startNode.title,
+                  target: item.endNode.title,
+                  value: '合作'
+                })
+              })
+              console.log(this.dataAuthor, this.linksAuthor)
+
+              this.$store.commit('setDataAuthor', this.dataAuthor)
+              this.$store.commit('setLinksAuthor', this.linksAuthor)
+
+
+              this.$router.push({
+                path: "Details",
+                // params: {
+                //   dataCited: this.dataCited,
+                //   linksCited: this.linksCited
+                // }
+              });
+            })
+
+          this.$router.push({
+            path: "Details",
+
+          });
+        })
+
     },
   },
 };

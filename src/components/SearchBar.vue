@@ -1,8 +1,22 @@
 <template>
   <div class="search-bar-wrapper">
-    <input class="search-input"
-           v-model="searchText"
-           @keydown.enter="handleSearch" />
+    <div class="title"
+         @click="unfold">
+      <span>{{ title }}</span>
+      <div class="icon"></div>
+
+    </div>
+    <div class="list"
+         v-if="show">
+      <div class="item"
+           v-for="(item,index) in list"
+           :key="index"
+           @click="itemClick(item)">{{ item }}</div>
+    </div>
+
+    <textarea class="search-input"
+              v-model="searchText"
+              @keydown.enter="handleSearch"></textarea>
     <button class="search-clear-btn"
             @click="handleClear"
             v-show="!searchTextIsNull()">
@@ -27,7 +41,15 @@ export default {
   data () {
     return {
       searchText: this.$route.query.keyWorld || "",
+      list: ['关键字', '摘要'],
+      title: '关键字',
+      show: false
     };
+  },
+  mounted () {
+    document.querySelector('.search-input').addEventListener('resize', function (e) {
+      console.log(1)
+    })
   },
   methods: {
     clearSearchText () {
@@ -48,6 +70,21 @@ export default {
       }
       this.$emit("search", this.searchText);
     },
+    unfold () {
+      this.show = !this.show
+      // if(this.show) this.show = false
+      // else this.show = true
+    },
+    itemClick (item) {
+      // if(item == '摘要') {
+      //   document.querySelector('.search-input').style.height = '100px'
+      // }else {
+      //   document.querySelector('.search-input').style.height = '48px'
+      // }
+      this.title = item
+      this.show = false
+      this.$emit('itemClick', item)
+    }
   },
 };
 </script>
@@ -83,22 +120,62 @@ export default {
 }
 .search-bar-wrapper {
   display: flex;
-  height: 40px;
-  width: 700px;
+  height: 50px;
+  width: 800px;
   margin: 8px auto;
-  border-radius: 20px;
+  // border-radius: 20px;
   // height: 2.5rem;
   // width: 40rem;
   // margin: 2.5rem auto;
   // border-radius: 1.25rem;
-  align-items: center;
+  align-items: start;
   background-color: #fff;
   position: relative;
 }
 
+.title {
+  height: 48px;
+  width: 90px;
+  background-color: #fff;
+  // border-right:1px solid #6d6d6d;
+  line-height: 48px;
+  // text-align: left;
+  display: flex;
+  // align-items: center;
+  span {
+    margin-left: 10px;
+  }
+  .icon {
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 10px solid #6d6d6d;
+    margin-top: 20px;
+    margin-left: 5px;
+    // align-self: center;
+  }
+}
+
+// .title:hover .list {
+//   display: block;
+// }
+
+.list {
+  // display: none;
+  background-color: #fff;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  .item {
+    width: 90px;
+    height: 50px;
+    line-height: 50px;
+  }
+}
+
 .search-input {
   flex: 1;
-  height: 38px;
+  height: 48px;
   line-height: 38px;
   padding: 0 36px 0 16px;
   font-size: 18px;
@@ -107,8 +184,10 @@ export default {
   border-top: 1px solid #dfe1e5;
   border-bottom: 1px solid #dfe1e5;
   border-left: 1px solid #dfe1e5;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  // resize: none;
+  overflow: auto;
+  // border-top-left-radius: 20px;
+  // border-bottom-left-radius: 20px;
 }
 
 .search-clear-btn {
@@ -130,11 +209,11 @@ export default {
 
 .search-btn {
   width: 42px;
-  height: 40px;
+  height: 48px;
   line-height: 40px;
   padding: 0;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  // border-top-right-radius: 20px;
+  // border-bottom-right-radius: 20px;
   background-color: #3b78e7;
   border: 1px solid #3367d6;
   outline: none;

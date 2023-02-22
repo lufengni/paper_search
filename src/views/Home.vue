@@ -5,7 +5,8 @@
 
     </div>
 
-    <div class="dount_box" v-if="flage">
+    <div class="dount_box"
+         v-if="flage">
       <div class="donut"></div>
       <span class="text">搜索中...</span>
     </div>
@@ -21,12 +22,12 @@ export default {
   directives: {
 
   },
-  data() {
+  data () {
     return {
       flage: false,
       searchText: "",
       data: [
-      // <span style="color: red">大数据</span>
+        // <span style="color: red">大数据</span>
         {
           title: '基于<span style="color: red">大数据</span>的电商供应链成本控制策略',
           authorList: ['陈建鑫'],
@@ -59,24 +60,22 @@ export default {
 
   },
   methods: {
-    toSearchPage(searchText) {
+    toSearchPage (searchText) {
       this.flage = true
+      this.searchText = searchText;
 
-      setTimeout(() => {
-        this.flage = false
-        this.$store.commit({
-          type: 'renewSearchList',
-          searchList: this.data
-        })
-        //vuex方式，不传参
-        this.searchText = searchText;
-        this.$router.push({
-          path: "/Search",
-          query: {
-            keyWorld: this.searchText,
-          },
-        });
-      }, 1500)
+      // setTimeout(() => {
+      //   this.flage = false
+
+      //   //vuex方式，不传参
+      //   this.searchText = searchText;
+      //   this.$router.push({
+      //     path: "/Search",
+      //     query: {
+      //       keyWorld: this.searchText,
+      //     },
+      //   });
+      // }, 13000)
 
 
       // const parData = JSON.stringify(this.data)
@@ -89,26 +88,34 @@ export default {
       //   },
       // });
 
-      // this.$axios.get('http://10.33.90.141:8200/search', {
-      //   params: {
-      //     page: 1,
-      //     limit: 10,
-      //     keyword: this.searchText
-      //   }
-      // })
-      //   .then((data) => {
-      //     console.log(data.data.queryData);
-      //     this.$router.push({
-      //       path: "/Search",
-      //       query: {
-      //         keyWorld: this.searchText,
-      //         queryData: data.data.queryData
-      //       },
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   })
+      // console.log("here");
+      // console.log(this.searchText);
+      this.$axios.get('http://localhost:8200/search/keyWord', {
+        params: {
+          page: 1,
+          limit: 10,
+          keyword: this.searchText
+        }
+      })
+        .then((data) => {
+          this.flage = false
+          console.log(data.data.queryData);
+          this.$store.commit({
+            type: 'renewSearchList',
+            searchList: data.data.queryData
+          })
+          this.$router.push({
+            path: "/Search",
+            query: {
+              keyWorld: this.searchText,
+              // queryData: data.data.queryData
+            },
+          });
+          this.data = data.data.queryData
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     },
   },
 };
@@ -116,19 +123,13 @@ export default {
 
 <style lang="scss" scoped>
 @-webkit-keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
 
-0% {
-
-  transform: rotate(0deg);
-
-}
-
-100% {
-
-  transform: rotate(360deg);
-
-}
-
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .dount_box {
   width: 200px;
@@ -138,7 +139,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #FFF;
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -153,7 +154,7 @@ export default {
   width: 48px;
 
   height: 48px;
-  border: 3px solid #FFF;
+  border: 3px solid #fff;
 
   border-radius: 50%;
 
@@ -164,12 +165,10 @@ export default {
   -webkit-animation: rotation 1s linear infinite;
 
   animation: rotation 1s linear infinite;
-
 }
 
 .donut:after {
-
-  content: "";
+  content: '';
 
   position: absolute;
 
@@ -187,8 +186,7 @@ export default {
 
   border: 3px solid transparent;
 
-  border-bottom-color: #FF3D00;
-
+  border-bottom-color: #ff3d00;
 }
 
 .root {

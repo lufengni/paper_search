@@ -3,19 +3,21 @@
     <!-- <header class="header"></header> -->
     <div :class="container">
       <div class="content">
-        <div class="title"
-             v-html="$store.getters.getDetail.title">
+        <div class="title">
+          <!-- v-html="$store.getters.getDetail.titleHeightLight" -->
           <!-- {{ content.title }} -->
+          {{ $store.getters.getDetail.title }}
         </div>
         <div class="author">
-          {{ $store.getters.getDetail.authorList }}
+          {{ $store.getters.getDetail.authors }}
         </div>
         <div class="abstract">
           <div class="text-title">
             <div class="text">摘要:</div>
           </div>
-          <div class="abstract-content">
-            {{ $store.getters.getDetail.summary }}
+          <div class="abstract-content"
+               v-html="$store.getters.getDetail.summary">
+            <!-- {{ $store.getters.getDetail.summary }} -->
           </div>
         </div>
         <div class="keyworld">
@@ -32,28 +34,18 @@
         <button class="btn Download">整本下载</button>
       </div>
       <div class="related-data">
-        <hr class="hr-solid-content"
-            data-content="论文引用次数" />
-        <LineChart id="line"
-                   :dataset="data1"></LineChart>
 
         <hr class="hr-solid-content"
             data-content="论文引用关系" />
-        <CitedPapers id="cite"
-                     :links="links"
-                     :nodes="nodes"></CitedPapers>
+        <CitedPapers :data="dataCited"
+                     :links="linksCited"></CitedPapers>
 
         <hr class="hr-solid-content"
             data-content="作者合作关系" />
-        <!-- <button @click="showCpn">点击加载组件</button> -->
-        <AuthorPartnership id="partnership"
-                           :links="links2"
-                           :nodes="nodes2"></AuthorPartnership>
+        <AuthorPartnership :data="dataAuthor"
+                           :links="linksAuthor"></AuthorPartnership>
       </div>
 
-      <!-- <div class="related-data">
-        
-      </div> -->
     </div>
   </div>
 </template>
@@ -100,150 +92,10 @@ export default {
     return {
       windowWidth: document.documentElement.clientWidth,
       isShow: false,
-      // content: JSON.parse(this.$route.query.detail),
-      data1: [
-        { year: "1991", value: 3 },
-        { year: "1992", value: 4 },
-        { year: "1993", value: 3.5 },
-        { year: "1994", value: 5 },
-        { year: "1995", value: 4.9 },
-        { year: "1996", value: 6 },
-        { year: "1997", value: 7 },
-        { year: "1998", value: 9 },
-        { year: "1999", value: 13 }
-      ],
-      links: [
-        { 
-          source: "大数据赋能高炉炼铁智能应用", 
-          target: "炼铁一体化智能管控平台在大冶特殊钢的应用", 
-          type: "resolved", 
-          rela: "主营产品" 
-        },
-        {
-          source: "大数据赋能高炉炼铁智能应用",
-          target: "基于大数据分析技术的商业智能应用研究",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "大数据赋能高炉炼铁智能应用",
-          target: "基于5G软件定义钢铁工业控制系统的设计与实现",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "大数据赋能高炉炼铁智能应用",
-          target: "基于MIV-GA-BP模型预测烧结矿FeO含量",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "基于MIV-GA-BP模型预测烧结矿FeO含量",
-          target: "大数据赋能高炉炼铁智能应用",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "大数据赋能高炉炼铁智能应用",
-          target: "基于大数据分析技术的商业智能应用研究",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "大数据赋能高炉炼铁智能应用",
-          target: "大数据在航空情报中的应用分析",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "大数据在企业中的应用",
-          target: "大数据在航空情报中的应用分析",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "金融资讯及数据服务",
-          target: "基于大数据分析技术的商业智能应用研究",
-          type: "resolved",
-          rela: "主营产品",
-        },
-
-      ],
-      nodes: [
-        { id: "大数据赋能高炉炼铁智能应用", type: "resolved" },
-        { id: "基于大数据分析技术的商业智能应用研究", type: "resolved" },
-        { id: "炼铁一体化智能管控平台在大冶特殊钢的应用", type: "resolved" },
-        { id: "基于5G软件定义钢铁工业控制系统的设计与实现", type: "resolved" },
-        { id: "金融资讯及数据服务", type: "resolved" },
-        { id: "大数据在航空情报中的应用分析", type: "resolved" },
-        { id: "基于MIV-GA-BP模型预测烧结矿FeO含量", type: "resolved" },
-        { id: "大数据在企业中的应用", type: "resolved" },
-      ],
-      links2: [
-        { 
-          source: "唐文文", 
-          target: "李欣", 
-          type: "resolved", 
-          rela: "主营产品" 
-        },
-        {
-          source: "李欣",
-          target: "唐文文",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "唐文文",
-          target: "刘小杰",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "刘小杰",
-          target: "唐文文",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "李宏扬",
-          target: "李欣",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "李欣",
-          target: "李宏扬",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "李宏扬",
-          target: "张淑会",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "张淑会",
-          target: "李宏扬",
-          type: "resolved",
-          rela: "主营产品",
-        },
-        {
-          source: "张淑会",
-          target: "唐文文",
-          type: "resolved",
-          rela: "主营产品",
-        },
-
-      ],
-      nodes2: [
-        { id: "唐文文", type: "resolved" },
-        { id: "李欣", type: "resolved" },
-        { id: "刘小杰", type: "resolved" },
-        { id: "李宏扬", type: "resolved" },
-        { id: "张淑会", type: "resolved" },
-      ],
-
+      dataCited: this.$store.getters.getDataCited,
+      linksCited: this.$store.getters.getLinksCited,
+      dataAuthor: this.$store.getters.getDataAuthor,
+      linksAuthor: this.$store.getters.getLinksAuthor,
     };
   },
   computed: {
@@ -258,37 +110,47 @@ export default {
   },
   mounted () {
     console.log(this.$store.state.screenWidth);
+    console.log(this.dataCited, this.$route.params)
+
   },
   created () {
-    // this.$axios.get('http://10.33.124.44:8200/data/yearReferenceTimes', {
+    console.log(this.dataCited, this.$route.params.dataCited)
+    // this.$axios.get('http://localhost:8200/paper/quote', {
     //   params: {
-    //     pageIndex: this.content.thesisIndex
+    //     pageTitle: this.$store.getters.getDetail.title
     //   }
     // })
     //   .then((data) => {
-
-    //   })
-
-    // this.$axios.get('http://10.33.90.141:8200/data/paper', {
-    //   params: {
-    //     pageIndex: this.content.thesisIndex
-    //   }
-    // })
-    //   .then((data) => {
-    //     console.log(data.data.queryData);
-    //     const datas = data.data.queryData
-    //     datas.forEach((element, index) => {
-    //       this.links[index] = {
-    //         sid: element.startNode.id,
-    //         tid: element.endNode.id,
-    //         source: element.startNode.title,
-    //         target: element.endNode.title,
-    //         type: "resolved",
-    //         rela: "引用",
+    //     console.log(data)
+    //     let set = new Set()
+    //     data.data.queryData.map(item => {
+    //       if (!set.has(item.startNode.title)) {
+    //         this.dataCited.push({
+    //           name: item.startNode.title,
+    //           des: item.startNode.title,
+    //         })
+    //         set.add(item.startNode.title)
     //       }
+    //       if (!set.has(item.endNode.title)) {
+    //         this.dataCited.push({
+    //           name: item.endNode.title,
+    //           des: item.endNode.title,
+    //         })
+    //         set.add(item.endNode.title)
+    //       }
+    //       this.linksCited.push({
+    //         source: item.startNode.title,
+    //         target: item.endNode.title,
+    //         name: '引用'
+    //       })
     //     })
-    //     console.log(this.links);
+    //     console.log(this.dataCited, this.linksCited)
+
     //   })
+
+
+
+
   },
   methods: {
     showCpn () {
